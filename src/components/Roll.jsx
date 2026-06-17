@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { CaretLeft, X, DiceFive, ArrowRight, ArrowLeft, Hand, Trophy } from '@phosphor-icons/react'
+import { ArrowFatLeft, X, DiceFive, ArrowRight, ArrowLeft, Hand, Trophy } from '@phosphor-icons/react'
 import { GRID_MAP, buildSnakePath, weightedRandom, ROLL_OUTCOMES, ROLL_WEIGHTS, ROLL_POINT_OPTIONS, ROLL_COLORS } from '../lib/roll'
 import { shuffle } from '../lib/shuffle'
 import { spawnConfetti } from '../lib/confetti'
@@ -163,7 +163,7 @@ function Roll({ S, cards, onBackToSettings, onExit }) {
     <div className="mode-screen">
       <div className="mode-topbar">
         <button className="nav-btn" onClick={onBackToSettings}>
-          <CaretLeft size={18} weight="fill" />
+          <ArrowFatLeft size={18} weight="fill" />
         </button>
         <div className="team-btns">
           {Array.from({ length: teamCount }).map((_, i) => (

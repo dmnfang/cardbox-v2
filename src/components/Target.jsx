@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { CaretLeft, X } from '@phosphor-icons/react'
+import { ArrowFatLeft, X } from '@phosphor-icons/react'
 import FitText from './FitText'
 import EndSheet from './EndSheet'
 import { shuffle } from '../lib/shuffle'
@@ -66,7 +66,7 @@ function Target({ S, cards, onBackToSettings, onExit }) {
     <div className="mode-screen">
       <div className="mode-topbar">
         <button className="nav-btn" onClick={onBackToSettings}>
-          <CaretLeft size={18} weight="fill" />
+          <ArrowFatLeft size={18} weight="fill" />
         </button>
         <span className="topbar-counter">
           {phase === 'intro'

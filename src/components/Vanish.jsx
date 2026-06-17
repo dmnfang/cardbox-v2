@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { CaretLeft, X, Ghost } from '@phosphor-icons/react'
+import { ArrowFatLeft, X, Ghost } from '@phosphor-icons/react'
 import EndSheet from './EndSheet'
 import GuessModal from './GuessModal'
 import { shuffle } from '../lib/shuffle'
@@ -106,7 +106,7 @@ function Vanish({ S, cards, onBackToSettings, onExit }) {
     <div className="mode-screen">
       <div className="mode-topbar">
         <button className="nav-btn" onClick={onBackToSettings}>
-          <CaretLeft size={18} weight="fill" />
+          <ArrowFatLeft size={18} weight="fill" />
         </button>
         <button className="topbar-action topbar-action-vanish" onClick={actionTap}>
           {phase === 'study' ? 'Shuffle' : 'Guess'}

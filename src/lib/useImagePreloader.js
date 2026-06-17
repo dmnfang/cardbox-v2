@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 export function useImagePreloader(urls) {
   const [loaded, setLoaded] = useState(0)
   const [done, setDone] = useState(false)
+  const key = urls.join('|')
 
   useEffect(() => {
     setLoaded(0)
@@ -30,7 +31,8 @@ export function useImagePreloader(urls) {
     })
 
     return () => { cancelled = true }
-  }, [urls])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key])
 
   return { loaded, total: urls.length, done }
 }

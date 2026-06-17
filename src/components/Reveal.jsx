@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { CaretLeft, X, Eye, ArrowRight, Play, Pause } from '@phosphor-icons/react'
+import { ArrowFatLeft, X, Eye, ArrowRight, Play, Pause } from '@phosphor-icons/react'
 import FitText from './FitText'
 import EndSheet from './EndSheet'
 import GuessModal from './GuessModal'
@@ -184,7 +184,7 @@ function Reveal({ S, cards, onBackToSettings, onExit }) {
     <div className="mode-screen">
       <div className="mode-topbar">
         <button className="nav-btn" onClick={onBackToSettings}>
-          <CaretLeft size={18} weight="fill" />
+          <ArrowFatLeft size={18} weight="fill" />
         </button>
         <button className="nav-btn" onClick={togglePause}>
           {paused ? <Play size={18} weight="fill" /> : <Pause size={18} weight="fill" />}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { CaretLeft, ArrowsOut, ArrowsIn, Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive } from '@phosphor-icons/react'
+import { ArrowFatLeft, ArrowsOut, ArrowsIn, Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive } from '@phosphor-icons/react'
 import FlashSettings from './FlashSettings'
 import RevealSettings from './RevealSettings'
 import TargetSettings from './TargetSettings'
@@ -42,7 +42,7 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
     <div className="prelaunch-screen">
       <div className="prelaunch-topbar">
         <button className="nav-btn" onClick={onBack}>
-          <CaretLeft size={18} weight="fill" />
+          <ArrowFatLeft size={18} weight="fill" />
         </button>
 
         <div className="mode-toggle-group">
