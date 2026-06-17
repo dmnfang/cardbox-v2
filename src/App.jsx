@@ -27,10 +27,20 @@ function App() {
     vanishShowText: true,
     rollTeams: 2,
     rollGrid: '4x4',
+    disabledCardIds: [],
   })
 
   function updateS(patch) {
     setS(prev => ({ ...prev, ...patch }))
+  }
+
+  function toggleDeck(deck) {
+    setS(prev => ({
+      ...prev,
+      selectedDecks: prev.selectedDecks.some(d => d.id === deck.id)
+        ? prev.selectedDecks.filter(d => d.id !== deck.id)
+        : [...prev.selectedDecks, deck]
+    }))
   }
 
   async function handleLaunch(mode, decks) {
@@ -119,7 +129,14 @@ function App() {
     return <Prelaunch S={S} updateS={updateS} onBack={handleBackHome} onLaunch={handleLaunchGame} />
   }
 
-  return <Home onLaunch={handleLaunch} />
+  return (
+    <Home
+      selectedDecks={S.selectedDecks}
+      onToggleDeck={toggleDeck}
+      onClearDecks={() => updateS({ selectedDecks: [] })}
+      onLaunch={handleLaunch}
+    />
+  )
 }
 
 export default App

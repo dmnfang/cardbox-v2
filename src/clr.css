@@ -1756,3 +1756,143 @@ img {
   justify-content: center;
   min-height: 40px;
 }
+
+/* ============================================
+   EDIT CARDS MODAL
+   ============================================ */
+.edit-cards-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--surface-base);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-cards-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  flex-shrink: 0;
+}
+
+.edit-cards-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.edit-cards-counter {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+.edit-cards-counter strong {
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.edit-cards-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.edit-cards-save-btn {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: var(--r-md);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.edit-cards-body {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--surface-panel);
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.edit-cards-deck-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-cards-deck-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+
+.edit-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.edit-card-tile {
+  position: relative;
+  background: var(--surface-card);
+  border: 2px solid var(--stroke-default);
+  border-radius: var(--r-lg);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  aspect-ratio: 1;
+  transition: opacity 0.15s ease;
+}
+
+.edit-card-tile.off {
+  opacity: 0.35;
+}
+
+.edit-card-img {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+}
+.edit-card-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.edit-card-label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+.edit-card-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

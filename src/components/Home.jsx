@@ -10,10 +10,9 @@ const MODES = [
   { id: 'roll',   label: 'Roll',   icon: DiceFive,   className: 'mode-btn-roll' },
 ]
 
-function Home({ onLaunch }) {
+function Home({ selectedDecks, onToggleDeck, onClearDecks, onLaunch }) {
   const [groups, setGroups] = useState([])
   const [activeGroupId, setActiveGroupId] = useState(null)
-  const [selectedDecks, setSelectedDecks] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -28,14 +27,6 @@ function Home({ onLaunch }) {
   }, [])
 
   const activeGroup = groups.find(g => g.id === activeGroupId)
-
-  function toggleDeck(deck) {
-    setSelectedDecks(prev =>
-      prev.some(d => d.id === deck.id)
-        ? prev.filter(d => d.id !== deck.id)
-        : [...prev, deck]
-    )
-  }
 
   if (loading) return <div className="home-loading">Loading library…</div>
   if (error) return <div className="home-error">Couldn't load decks: {error}</div>
@@ -58,7 +49,7 @@ function Home({ onLaunch }) {
             ))}
           </div>
           {selectedDecks.length > 0 && (
-            <button className="clear-btn" onClick={() => setSelectedDecks([])}>
+            <button className="clear-btn" onClick={onClearDecks}>
               Clear
             </button>
           )}
@@ -71,7 +62,7 @@ function Home({ onLaunch }) {
               <div
                 key={deck.id}
                 className={`deck-card ${isSelected ? 'selected' : ''}`}
-                onClick={() => toggleDeck(deck)}
+                onClick={() => onToggleDeck(deck)}
               >
                 <div className="deck-card-header">
                   <span className="deck-card-title">{deck.name}</span>

@@ -5,7 +5,8 @@ import RevealSettings from './RevealSettings'
 import TargetSettings from './TargetSettings'
 import VanishSettings from './VanishSettings'
 import RollSettings from './RollSettings'
-import { getActiveCards } from '../lib/cards'
+import EditCardsModal from './EditCardsModal'
+import { getActiveCards, getDeckCards } from '../lib/cards'
 
 const MODES = [
   { id: 'flash',  label: 'Flash',  icon: Lightning },
@@ -19,6 +20,7 @@ const IMPLEMENTED_MODES = ['flash', 'reveal', 'target', 'vanish', 'roll']
 
 function Prelaunch({ S, updateS, onBack, onLaunch }) {
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [showEditCards, setShowEditCards] = useState(false)
 
   useEffect(() => {
     const handler = () => setIsFullscreen(!!document.fullscreenElement)
@@ -35,7 +37,13 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
     updateS({ selectedDecks: S.selectedDecks.filter(d => d.id !== deckId) })
   }
 
-  const activeCards = getActiveCards(S.cards, S.selectedDecks)
+  function handleSaveDisabledCards(disabledIds) {
+    updateS({ disabledCardIds: disabledIds })
+    setShowEditCards(false)
+  }
+
+  const deckCards = getDeckCards(S.cards, S.selectedDecks)
+  const activeCards = getActiveCards(S.cards, S.selectedDecks, S.disabledCardIds)
   const activeMode = MODES.find(m => m.id === S.mode)
 
   return (
@@ -70,7 +78,7 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
         <div className="prelaunch-left">
           <span className="panel-title">Selected Decks</span>
           {S.selectedDecks.length > 0 && (
-            <button className="edit-cards-btn" disabled title="Coming soon">
+            <button className="edit-cards-btn" onClick={() => setShowEditCards(true)}>
               Edit Cards
             </button>
           )}
@@ -82,15 +90,18 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
                 <button className="back-home-btn" onClick={onBack}>Back to Home</button>
               </div>
             ) : (
-              S.selectedDecks.map(deck => (
-                <div key={deck.id} className="sel-item">
-                  <div className="deck-card-header">
-                    <span className="sel-title">{deck.name}</span>
-                    <button className="remove-btn" onClick={() => removeDeck(deck.id)}>✕</button>
+              S.selectedDecks.map(deck => {
+                const activeCount = activeCards.filter(c => c.category_id === deck.id).length
+                return (
+                  <div key={deck.id} className="sel-item">
+                    <div className="deck-card-header">
+                      <span className="sel-title">{deck.name}</span>
+                      <button className="remove-btn" onClick={() => removeDeck(deck.id)}>✕</button>
+                    </div>
+                    <div className="deck-chip">{activeCount} cards</div>
                   </div>
-                  <div className="deck-chip">{deck.cardCount} cards</div>
-                </div>
-              ))
+                )
+              })
             )}
           </div>
         </div>
@@ -116,6 +127,7 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
             className={`launch-btn launch-btn-${S.mode}`}
             disabled={
               S.selectedDecks.length === 0 ||
+              activeCards.length === 0 ||
               !IMPLEMENTED_MODES.includes(S.mode) ||
               (S.mode === 'target' && (S.targetWords?.length ?? 0) === 0)
             }
@@ -125,6 +137,16 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
           </button>
         </div>
       </div>
+
+      {showEditCards && (
+        <EditCardsModal
+          cards={deckCards}
+          selectedDecks={S.selectedDecks}
+          disabledCardIds={S.disabledCardIds || []}
+          onSave={handleSaveDisabledCards}
+          onClose={() => setShowEditCards(false)}
+        />
+      )}
     </div>
   )
 }
