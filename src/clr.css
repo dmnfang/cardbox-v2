@@ -1896,3 +1896,270 @@ img {
   align-items: center;
   justify-content: center;
 }
+
+/* ============================================
+   MODE TOKENS — add alongside the existing set
+   ============================================ */
+:root {
+  --flip:          #E8935A;
+  --flip-subtle:   #FBE7D6;
+}
+
+.mode-btn-flip           { background: var(--flip); }
+.mode-btn-flip:disabled  { background: var(--flip-subtle); }
+.launch-btn-flip         { background: var(--flip); }
+.loading-bar-fill-flip   { background: var(--flip); }
+
+/* ============================================
+   FLIP — settings
+   ============================================ */
+.flip-info-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.flip-scaffold-inputs {
+  gap: 10px;
+}
+
+.flip-text-input {
+  height: 44px;
+  border-radius: var(--r-md);
+  border: 2px solid var(--stroke-default);
+  background: var(--surface-base);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0 14px;
+  outline: none;
+  width: 100%;
+  max-width: 420px;
+}
+
+.flip-text-input:focus {
+  border-color: var(--flip);
+}
+
+/* ============================================
+   FLIP — play screen layout
+   ============================================ */
+.flip-body {
+  flex: 1;
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.flip-scaffold-panel {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--surface-card);
+  border: 2px solid var(--stroke-default);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flip-scaffold-label {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.flip-scaffold-label-answer {
+  margin-top: 8px;
+}
+
+.flip-scaffold-text {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.flip-scaffold-answer {
+  color: var(--flip);
+}
+
+.flip-scaffold-turn-score {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 2px solid var(--stroke-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flip-scaffold-turn-score-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.flip-scaffold-turn-score-value {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--flip);
+}
+
+.flip-scaffold-status {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.flip-scaffold-status-stop { color: var(--error); }
+.flip-scaffold-status-cleared { color: var(--flip); }
+
+.flip-next-team-btn {
+  height: 56px;
+  border-radius: var(--r-lg);
+  background: var(--flip);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.flip-next-team-btn:disabled {
+  background: var(--surface-inset);
+  color: var(--text-disabled);
+}
+
+/* ============================================
+   FLIP — card grid
+   ============================================ */
+.flip-grid-panel {
+  flex: 2;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+
+.flip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================
+   FLIP — card flip animation
+   ============================================ */
+.flip-cell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  perspective: 1200px;
+  border-radius: var(--r-lg);
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.45, 0.05, 0.15, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--r-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.flip-card-front {
+  background: var(--surface-card);
+  border: 2px solid var(--stroke-default);
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+}
+
+.flip-cell-img {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.flip-cell-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.flip-cell-word {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.flip-card-back {
+  background: var(--surface-card);
+  border: 2px solid var(--flip);
+  transform: rotateY(180deg);
+  flex-direction: column;
+  gap: 8px;
+  color: var(--flip);
+}
+
+.flip-card-back-stop {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.flip-back-label {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 700;
+}
+
+/* ============================================
+   FLIP — end screen (reuses Roll's modal)
+   ============================================ */
+.flip-scope .roll-end-score { color: var(--flip); }
+.flip-scope .end-btn-roll   { background: var(--flip); }
+.flip-scope .team-btn-score { color: var(--flip); }
+.flip-scope .team-btn.active-roll { border-color: var(--flip); }
+
+.flip-scope .topbar-counter {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { ArrowFatLeft, ArrowsOut, ArrowsIn, Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive } from '@phosphor-icons/react'
+import { ArrowFatLeft, ArrowsOut, ArrowsIn, Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive, Stack } from '@phosphor-icons/react'
 import FlashSettings from './FlashSettings'
 import RevealSettings from './RevealSettings'
 import TargetSettings from './TargetSettings'
 import VanishSettings from './VanishSettings'
 import RollSettings from './RollSettings'
+import FlipSettings from './FlipSettings'
 import EditCardsModal from './EditCardsModal'
 import { getActiveCards, getDeckCards } from '../lib/cards'
 
@@ -14,9 +15,10 @@ const MODES = [
   { id: 'target', label: 'Target', icon: TargetIcon },
   { id: 'vanish', label: 'Vanish', icon: Ghost },
   { id: 'roll',   label: 'Roll',   icon: DiceFive },
+  { id: 'flip',   label: 'Flip',   icon: Stack },
 ]
 
-const IMPLEMENTED_MODES = ['flash', 'reveal', 'target', 'vanish', 'roll']
+const IMPLEMENTED_MODES = ['flash', 'reveal', 'target', 'vanish', 'roll', 'flip']
 
 function Prelaunch({ S, updateS, onBack, onLaunch }) {
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -117,6 +119,8 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
             <VanishSettings S={S} updateS={updateS} cards={activeCards} />
           ) : S.mode === 'roll' ? (
             <RollSettings S={S} updateS={updateS} />
+          ) : S.mode === 'flip' ? (
+            <FlipSettings S={S} updateS={updateS} />
           ) : (
             <div className="settings-placeholder">
               {activeMode?.label} settings — coming soon

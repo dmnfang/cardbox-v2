@@ -7,11 +7,12 @@ import Reveal from './components/Reveal'
 import Target from './components/Target'
 import Vanish from './components/Vanish'
 import Roll from './components/Roll'
+import Flip from './components/Flip'
 import { fetchDeckCards } from './lib/api'
 
 function App() {
   const [screen, setScreen] = useState('home')
-  const [pending, setPending] = useState(null) // { mode, cards } - set right before loading
+  const [pending, setPending] = useState(null)
   const [S, setS] = useState({
     selectedDecks: [],
     cards: [],
@@ -27,6 +28,9 @@ function App() {
     vanishShowText: true,
     rollTeams: 2,
     rollGrid: '4x4',
+    flipTeams: 2,
+    flipQuestion: '',
+    flipAnswer: '',
     disabledCardIds: [],
   })
 
@@ -71,58 +75,27 @@ function App() {
   }
 
   if (screen === 'flash') {
-    return (
-      <Flash
-        S={S}
-        cards={pending.cards}
-        onBackToSettings={handleBackToSettings}
-        onExit={handleBackHome}
-      />
-    )
+    return <Flash S={S} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
   }
 
   if (screen === 'reveal') {
-    return (
-      <Reveal
-        S={S}
-        cards={pending.cards}
-        onBackToSettings={handleBackToSettings}
-        onExit={handleBackHome}
-      />
-    )
+    return <Reveal S={S} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
   }
 
   if (screen === 'target') {
-    return (
-      <Target
-        S={S}
-        cards={pending.cards}
-        onBackToSettings={handleBackToSettings}
-        onExit={handleBackHome}
-      />
-    )
+    return <Target S={S} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
   }
 
   if (screen === 'vanish') {
-    return (
-      <Vanish
-        S={S}
-        cards={pending.cards}
-        onBackToSettings={handleBackToSettings}
-        onExit={handleBackHome}
-      />
-    )
+    return <Vanish S={S} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
   }
 
   if (screen === 'roll') {
-    return (
-      <Roll
-        S={S}
-        cards={pending.cards}
-        onBackToSettings={handleBackToSettings}
-        onExit={handleBackHome}
-      />
-    )
+    return <Roll S={S} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
+  }
+
+  if (screen === 'flip') {
+    return <Flip S={S} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
   }
 
   if (screen === 'prelaunch') {
