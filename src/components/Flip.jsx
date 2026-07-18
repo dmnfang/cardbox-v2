@@ -108,7 +108,10 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
               <div className="flip-scaffold-text flip-scaffold-answer">{S.flipAnswer || '—'}</div>
             </>
           ) : (
-            <div className="flip-scaffold-text">No question/answer set — add one in settings if you want a scaffold on screen.</div>
+            <>
+              <span className="flip-scaffold-label">Practicing</span>
+              <div className="flip-scaffold-text">{S.selectedDecks.map(d => d.name).join(', ')}</div>
+            </>
           )}
 
           <div className="flip-scaffold-turn-score">

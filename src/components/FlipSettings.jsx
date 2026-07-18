@@ -35,6 +35,7 @@ function FlipSettings({ S, updateS }) {
           value={S.flipAnswer || ''}
           onChange={e => updateS({ flipAnswer: e.target.value })}
         />
+        <div className="flip-scaffold-hint">Leave both blank if you're just practicing vocabulary — the deck name will show instead.</div>
       </div>
 
       <div className="flip-info-text">

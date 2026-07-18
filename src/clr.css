@@ -2023,6 +2023,13 @@ img {
 .flip-scaffold-status-stop { color: var(--error); }
 .flip-scaffold-status-cleared { color: var(--flip); }
 
+.flip-scaffold-hint {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: -4px;
+}
+
 .flip-next-team-btn {
   height: 56px;
   border-radius: var(--r-lg);
