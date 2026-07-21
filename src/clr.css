@@ -308,6 +308,15 @@ img {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modes-list::-webkit-scrollbar {
+  display: none;
 }
 
 .mode-btn {
