@@ -11,7 +11,6 @@ function FlashSettings({ S, updateS, cards }) {
     let { showImage, showWord } = S
     if (type === 'image') showImage = on
     else showWord = on
-    // Can't have both off - force the other one on, matching v1's rule
     if (!showImage && !showWord) {
       if (type === 'image') showWord = true
       else showImage = true
@@ -68,6 +67,23 @@ function FlashSettings({ S, updateS, cards }) {
             <button
               className={`toggle-pill ${!S.showWord ? 'active' : ''}`}
               onClick={() => toggleContent('word', false)}
+            >
+              Off
+            </button>
+          </div>
+        </div>
+        <div className="settings-block">
+          <span className="settings-label">Preview Grid</span>
+          <div className="toggle-group">
+            <button
+              className={`toggle-pill ${S.previewGrid ? 'active' : ''}`}
+              onClick={() => updateS({ previewGrid: true })}
+            >
+              On
+            </button>
+            <button
+              className={`toggle-pill ${!S.previewGrid ? 'active' : ''}`}
+              onClick={() => updateS({ previewGrid: false })}
             >
               Off
             </button>

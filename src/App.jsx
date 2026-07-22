@@ -20,6 +20,7 @@ function App() {
     cardOrder: 'sequential',
     showImage: true,
     showWord: true,
+    previewGrid: false,
     revealContent: 'image',
     revealGrid: '4x4',
     revealSpeed: 1,
