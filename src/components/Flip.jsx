@@ -147,7 +147,7 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
                       <div className="flip-cell-img">
                         <img src={card.image_url} alt={card.label} />
                       </div>
-                      <div className="flip-cell-word">{card.label}</div>
+                      {S.flipShowText && <div className="flip-cell-word">{card.label}</div>}
                     </div>
                     <div className={`flip-card-face flip-card-back ${token === FLIP_STOP ? 'flip-card-back-stop' : ''}`}>
                       {token === FLIP_STOP ? (

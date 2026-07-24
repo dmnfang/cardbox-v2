@@ -16,6 +16,23 @@ function FlipSettings({ S, updateS }) {
             ))}
           </div>
         </div>
+        <div className="settings-block">
+          <span className="settings-label">Text</span>
+          <div className="toggle-group">
+            <button
+              className={`toggle-pill ${S.flipShowText ? 'active' : ''}`}
+              onClick={() => updateS({ flipShowText: true })}
+            >
+              On
+            </button>
+            <button
+              className={`toggle-pill ${!S.flipShowText ? 'active' : ''}`}
+              onClick={() => updateS({ flipShowText: false })}
+            >
+              Off
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="settings-block flip-scaffold-inputs">

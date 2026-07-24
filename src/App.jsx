@@ -30,6 +30,7 @@ function App() {
     rollTeams: 2,
     rollGrid: '4x4',
     flipTeams: 2,
+    flipShowText: true,
     flipQuestion: '',
     flipAnswer: '',
     disabledCardIds: [],
