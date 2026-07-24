@@ -20,7 +20,7 @@ function FitText({ text, maxSize = 220, minSize = 32, className }) {
       while (lo <= hi) {
         const mid = Math.floor((lo + hi) / 2)
         el.style.fontSize = `${mid}px`
-        const fits = el.scrollWidth <= container.clientWidth && el.scrollHeight <= container.clientHeight
+        const fits = el.scrollWidth <= container.clientWidth - 4 && el.scrollHeight <= container.clientHeight - 8
         if (fits) {
           best = mid
           lo = mid + 1
