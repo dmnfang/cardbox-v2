@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Home from './components/Home'
 import Prelaunch from './components/Prelaunch'
 import LoadingModal from './components/LoadingModal'
@@ -9,6 +9,7 @@ import Vanish from './components/Vanish'
 import Roll from './components/Roll'
 import Flip from './components/Flip'
 import { fetchDeckCards } from './lib/api'
+import { getSession, getProfile, onAuthStateChange } from './lib/auth'
 
 function App() {
   const [screen, setScreen] = useState('home')
@@ -35,6 +36,30 @@ function App() {
     flipAnswer: '',
     disabledCardIds: [],
   })
+
+  const [session, setSession] = useState(null)
+  const [profile, setProfile] = useState(null)
+  const [authLoading, setAuthLoading] = useState(true)
+
+  useEffect(() => {
+    getSession().then(s => {
+      setSession(s)
+      setAuthLoading(false)
+    })
+
+    const subscription = onAuthStateChange(s => {
+      setSession(s)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+
+  useEffect(() => {
+    if (session?.user) {
+      getProfile(session.user.id).then(setProfile).catch(() => setProfile(null))
+    } else {
+      setProfile(null)
+    }
+  }, [session])
 
   function updateS(patch) {
     setS(prev => ({ ...prev, ...patch }))
