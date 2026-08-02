@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive, Stack, CheckFat as Check } from '@phosphor-icons/react'
+import { Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive, Stack, Timer, CheckFat as Check } from '@phosphor-icons/react'
 import { fetchCardboxLibrary } from '../lib/api'
 
 const MODES = [
@@ -9,6 +9,7 @@ const MODES = [
   { id: 'vanish', label: 'Vanish', icon: Ghost,      className: 'mode-btn-vanish' },
   { id: 'roll',   label: 'Roll',   icon: DiceFive,   className: 'mode-btn-roll' },
   { id: 'flip',   label: 'Flip',   icon: Stack,      className: 'mode-btn-flip' },
+  { id: 'spell',  label: 'Spell',  icon: Timer,      className: 'mode-btn-spell' },
 ]
 
 function Home({ selectedDecks, onToggleDeck, onClearDecks, onLaunch }) {

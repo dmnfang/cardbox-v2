@@ -2256,3 +2256,296 @@ img {
   font-weight: 700;
   color: var(--text-primary);
 }
+
+/* ============================================
+   MODE TOKENS — Spell
+   ============================================ */
+:root {
+  --spell:        #3AACA8;
+  --spell-subtle: #DEF2F1;
+}
+
+.mode-btn-spell          { background: var(--spell); }
+.mode-btn-spell:disabled { background: var(--spell-subtle); }
+.launch-btn-spell        { background: var(--spell); }
+.loading-bar-fill-spell  { background: var(--spell); }
+
+/* ============================================
+   SPELL — settings
+   ============================================ */
+.spell-info-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SPELL — play screen
+   ============================================ */
+.spell-body {
+  flex: 1;
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.spell-card-panel {
+  flex: 2;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spell-card {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-card);
+  border: 2px solid var(--stroke-default);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.spell-card-img {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.spell-card-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.spell-word-boxes {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spell-letter-box {
+  width: 88px;
+  height: 104px;
+  border-radius: var(--r-lg);
+  border: 3px solid var(--stroke-medium);
+  background: var(--surface-inset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.spell-letter-box.active {
+  border-color: var(--spell);
+  transform: scale(1.05);
+}
+
+.spell-letter-box.filled {
+  background: var(--spell);
+  border-color: var(--spell);
+  color: #fff;
+  transform: scale(1);
+}
+
+.spell-word-space {
+  width: 32px;
+}
+
+.spell-side-panel {
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
+.spell-timer-box {
+  position: relative;
+  flex-shrink: 0;
+  background: var(--surface-card);
+  border: 2px solid var(--stroke-default);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4px;
+}
+
+.spell-timer-label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.spell-timer-value {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--spell);
+}
+
+.spell-bonus-flash {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--success);
+  animation: spellBonusPop 0.7s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes spellBonusPop {
+  0%   { transform: translateY(4px); opacity: 0; }
+  20%  { transform: translateY(-4px); opacity: 1; }
+  70%  { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(-18px); opacity: 0; }
+}
+
+.spell-alpha-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  align-content: start;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.spell-alpha-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.spell-alpha-key {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: var(--r-md);
+  background: var(--surface-card);
+  border: 2px solid var(--stroke-default);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spell-alpha-key:disabled {
+  cursor: default;
+}
+
+.spell-alpha-key.correct {
+  background: var(--spell);
+  border-color: var(--spell);
+  color: #fff;
+}
+
+.spell-alpha-key.wrong {
+  background: var(--surface-inset);
+  border-color: var(--stroke-default);
+  color: var(--text-disabled);
+}
+
+.spell-last-run-box {
+  flex-shrink: 0;
+  background: var(--surface-card);
+  border: 2px solid var(--stroke-default);
+  border-radius: var(--r-lg);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.spell-last-run-label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.spell-last-run-value {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.spell-new-best {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--warning-subtle);
+  color: var(--warning);
+  border-radius: var(--r-pill);
+  padding: 8px 20px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ============================================
+   SPELL — end screen
+   ============================================ */
+.spell-end-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.spell-end-stat-value {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--spell);
+}
+
+.spell-end-stat-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   SPELL — scoped overrides for reused Roll classes
+   ============================================ */
+.spell-scope .topbar-counter {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.spell-scope .end-btn-roll { background: var(--spell); }

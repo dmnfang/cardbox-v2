@@ -8,6 +8,7 @@ import Target from './components/Target'
 import Vanish from './components/Vanish'
 import Roll from './components/Roll'
 import Flip from './components/Flip'
+import Spell from './components/Spell'
 import { fetchDeckCards } from './lib/api'
 import { getSession, getProfile, onAuthStateChange } from './lib/auth'
 
@@ -35,6 +36,11 @@ function App() {
     flipQuestion: '',
     flipAnswer: '',
     disabledCardIds: [],
+    spellWordCount: 8,
+    spellTotalTime: 90,
+    spellLetterBonus: 5,
+    spellLetterCase: 'upper',
+    spellLastResult: null,
   })
 
   const [session, setSession] = useState(null)
@@ -123,6 +129,10 @@ function App() {
 
   if (screen === 'flip') {
     return <Flip S={S} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
+  }
+
+  if (screen === 'spell') {
+    return <Spell S={S} updateS={updateS} cards={pending.cards} onBackToSettings={handleBackToSettings} onExit={handleBackHome} />
   }
 
   if (screen === 'prelaunch') {
