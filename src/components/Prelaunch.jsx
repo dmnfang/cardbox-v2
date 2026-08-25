@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowFatLeft, ArrowsOut, ArrowsIn, Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive, Stack, Timer } from '@phosphor-icons/react'
+import { House, ArrowsOut, ArrowsIn, Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive, Stack, Timer } from '@phosphor-icons/react'
 import FlashSettings from './FlashSettings'
 import RevealSettings from './RevealSettings'
 import TargetSettings from './TargetSettings'
@@ -53,8 +53,8 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
   return (
     <div className="prelaunch-screen">
       <div className="prelaunch-topbar">
-        <button className="nav-btn" onClick={onBack}>
-          <ArrowFatLeft size={18} weight="fill" />
+        <button className="nav-btn" onClick={onBack} aria-label="Home">
+          <House size={18} weight="fill" />
         </button>
 
         <div className="mode-toggle-group">
@@ -73,7 +73,7 @@ function Prelaunch({ S, updateS, onBack, onLaunch }) {
           })}
         </div>
 
-        <button className="nav-btn" onClick={toggleFullscreen}>
+        <button className="nav-btn" onClick={toggleFullscreen} aria-label="Toggle fullscreen">
           {isFullscreen ? <ArrowsIn size={18} weight="fill" /> : <ArrowsOut size={18} weight="fill" />}
         </button>
       </div>

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive, Stack, Timer, CheckFat as Check } from '@phosphor-icons/react'
+import {
+  Lightning, Eye, Crosshair as TargetIcon, Ghost, DiceFive, Stack, Timer,
+  CheckFat as Check, ArrowsOut, ArrowsIn,
+} from '@phosphor-icons/react'
 import { fetchCardboxLibrary } from '../lib/api'
+import logo from '../assets/logo.svg'
 
 const MODES = [
   { id: 'flash',  label: 'Flash',  icon: Lightning,  className: 'mode-btn-flash' },
@@ -12,11 +16,28 @@ const MODES = [
   { id: 'spell',  label: 'Spell',  icon: Timer,      className: 'mode-btn-spell' },
 ]
 
+function Header({ isFullscreen, onToggleFullscreen }) {
+  return (
+    <header className="app-header">
+      <div className="brand">
+        <img src={logo} alt="Cardbox" className="brand-logo" />
+        <span className="brand-name">Cardbox</span>
+      </div>
+      <div className="header-actions">
+        <button className="icon-btn" onClick={onToggleFullscreen} aria-label="Toggle fullscreen">
+          {isFullscreen ? <ArrowsIn size={20} weight="fill" /> : <ArrowsOut size={20} weight="fill" />}
+        </button>
+      </div>
+    </header>
+  )
+}
+
 function Home({ selectedDecks, onToggleDeck, onClearDecks, onLaunch }) {
   const [groups, setGroups] = useState([])
   const [activeGroupId, setActiveGroupId] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
     fetchCardboxLibrary()
@@ -28,80 +49,102 @@ function Home({ selectedDecks, onToggleDeck, onClearDecks, onLaunch }) {
       .finally(() => setLoading(false))
   }, [])
 
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement))
+    document.addEventListener('fullscreenchange', onChange)
+    return () => document.removeEventListener('fullscreenchange', onChange)
+  }, [])
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      document.documentElement.requestFullscreen()
+    }
+  }
+
   const activeGroup = groups.find(g => g.id === activeGroupId)
 
   if (loading) return <div className="home-loading">Loading library…</div>
   if (error) return <div className="home-error">Couldn't load decks: {error}</div>
 
   return (
-    <div className="home-screen">
-      <div className="decks-panel">
-        <h1 className="panel-title">Decks</h1>
+    <div className="app-shell">
+      <div className="home-screen">
+        <Header isFullscreen={isFullscreen} onToggleFullscreen={toggleFullscreen} />
 
-        <div className="decks-header-row">
-          <div className="group-tabs">
-            {groups.map(g => (
-              <button
-                key={g.id}
-                className={`group-pill ${g.id === activeGroupId ? 'active' : ''}`}
-                onClick={() => setActiveGroupId(g.id)}
-              >
-                {g.name}
-              </button>
-            ))}
-          </div>
-          {selectedDecks.length > 0 && (
-            <button className="clear-btn" onClick={onClearDecks}>
-              Clear
-            </button>
-          )}
-        </div>
-
-        <div className="deck-grid">
-          {activeGroup?.decks.map(deck => {
-            const isSelected = selectedDecks.some(d => d.id === deck.id)
-            return (
-              <div
-                key={deck.id}
-                className={`deck-card ${isSelected ? 'selected' : ''}`}
-                onClick={() => onToggleDeck(deck)}
-              >
-                <div className="deck-card-header">
-                  <span className="deck-card-title">{deck.name}</span>
-                  <div className="deck-dot">
-                    <Check size={14} weight="fill" />
-                  </div>
+        <div className="panels-row">
+          <div className="decks-panel">
+            <div className="decks-header">
+              <h1 className="panel-title">Decks</h1>
+              {selectedDecks.length > 0 && (
+                <div className="decks-selection">
+                  <span className="decks-selection-count">
+                    <strong>{selectedDecks.length}</strong>{' '}
+                    {selectedDecks.length === 1 ? 'deck' : 'decks'} selected
+                  </span>
+                  <button className="clear-btn" onClick={onClearDecks}>Clear All</button>
                 </div>
-                <div className="deck-chip">{deck.cardCount} cards</div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+              )}
+            </div>
 
-      <div className="modes-panel">
-        <h2 className="panel-title">Modes</h2>
-        <p className="modes-hint">
-          {selectedDecks.length === 0
-            ? 'Select at least 1 deck'
-            : <><strong>{selectedDecks.length}</strong> {selectedDecks.length === 1 ? 'deck' : 'decks'} selected</>}
-        </p>
-        <div className="modes-list">
-          {MODES.map(mode => {
-            const Icon = mode.icon
-            const disabled = selectedDecks.length === 0
-            return (
-              <button
-                key={mode.id}
-                className={`mode-btn ${mode.className}`}
-                disabled={disabled}
-                onClick={() => onLaunch(mode.id, selectedDecks)}
-              >
-                <Icon size={20} weight="fill" />
-                {mode.label}
-              </button>
-            )
-          })}
+            <div className="group-tabs">
+              {groups.map(g => (
+                <button
+                  key={g.id}
+                  className={`group-pill ${g.id === activeGroupId ? 'active' : ''}`}
+                  onClick={() => setActiveGroupId(g.id)}
+                >
+                  {g.name}
+                </button>
+              ))}
+            </div>
+
+            <div className="deck-grid">
+              {activeGroup?.decks.map(deck => {
+                const isSelected = selectedDecks.some(d => d.id === deck.id)
+                return (
+                  <div
+                    key={deck.id}
+                    className={`deck-card ${isSelected ? 'selected' : ''}`}
+                    onClick={() => onToggleDeck(deck)}
+                  >
+                    <div className="deck-card-header">
+                      <span className="deck-card-title">{deck.name}</span>
+                      <div className="deck-dot">
+                        <Check size={14} weight="fill" />
+                      </div>
+                    </div>
+                    <div className="deck-chip">{deck.cardCount} cards</div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="modes-panel">
+            <div className="modes-header">
+              <h2 className="panel-title">Modes</h2>
+            </div>
+            <p className="modes-hint">Select at least 1 deck</p>
+            <div className="modes-list">
+              {MODES.map(mode => {
+                const Icon = mode.icon
+                const disabled = selectedDecks.length === 0
+                return (
+                  <button
+                    key={mode.id}
+                    className={`mode-btn ${mode.className}`}
+                    disabled={disabled}
+                    onClick={() => onLaunch(mode.id, selectedDecks)}
+                  >
+                    <Icon size={20} weight="fill" />
+                    {mode.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>

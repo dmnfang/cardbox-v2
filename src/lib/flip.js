@@ -33,3 +33,20 @@ export function drawFlipToken(pool, flipCount) {
   nextPool.splice(nextPool.indexOf(token), 1)
   return { token, nextPool }
 }
+
+export const FLIP_COIN = 'COIN'
+export const FLIP_COIN_GRID_SIZE = 2
+
+export function buildCoinGrid(cards) {
+  const pool = shuffle([...cards])
+  if (pool.length >= FLIP_COIN_GRID_SIZE) return pool.slice(0, FLIP_COIN_GRID_SIZE)
+  const grid = []
+  while (grid.length < FLIP_COIN_GRID_SIZE) {
+    grid.push(...shuffle([...cards]))
+  }
+  return grid.slice(0, FLIP_COIN_GRID_SIZE)
+}
+
+export function buildCoinTokens() {
+  return shuffle([FLIP_COIN, FLIP_STOP])
+}
