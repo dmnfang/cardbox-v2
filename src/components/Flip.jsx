@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-import { Gear, Stop, ArrowsOut, ArrowsIn, Trophy, Prohibit, Sparkle, Coins } from '@phosphor-icons/react'
-import { buildFlipGrid, buildTokenPool, drawFlipToken, buildCoinGrid, buildCoinTokens, FLIP_STOP, FLIP_COIN, FLIP_GRID_SIZE, FLIP_COIN_GRID_SIZE } from '../lib/flip'
+import { Gear, Stop, ArrowsOut, ArrowsIn, Trophy, Prohibit, Sparkle, Coins, TrendUp } from '@phosphor-icons/react'
+import { buildFlipGrid, buildTokenPool, drawFlipToken, buildCoinGrid, buildCoinTokens, FLIP_STOP, FLIP_COIN, FLIP_GRID_SIZE, FLIP_COIN_GRID_SIZE, FLIP_MAX_SCORE, FLIP_MAX_SCORE_BONUS } from '../lib/flip'
 import { spawnConfetti } from '../lib/confetti'
 
 const CONFETTI_COLORS = ['var(--flash)', 'var(--reveal)', 'var(--target)', 'var(--vanish)', 'var(--roll)']
@@ -10,10 +10,12 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
   const isCoins = S.flipType === 'coins'
   const gridSize = isCoins ? FLIP_COIN_GRID_SIZE : FLIP_GRID_SIZE
 
+  const [bonusPoints, setBonusPoints] = useState(false)
+
   const [scores, setScores] = useState(() => Array(teamCount).fill(0))
   const [currentTeam, setCurrentTeam] = useState(0)
   const [gridCards, setGridCards] = useState(() => isCoins ? buildCoinGrid(cards) : buildFlipGrid(cards))
-  const [tokenPool, setTokenPool] = useState(() => buildTokenPool())
+  const [tokenPool, setTokenPool] = useState(() => buildTokenPool(false))
   const [coinTokens, setCoinTokens] = useState(() => buildCoinTokens())
   const [revealed, setRevealed] = useState(() => Array(gridSize).fill(null))
   const [flipCount, setFlipCount] = useState(0)
@@ -37,6 +39,14 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
     else document.exitFullscreen()
   }
 
+  function toggleBonus() {
+    const next = !bonusPoints
+    setBonusPoints(next)
+    if (!isCoins && !turnOver) {
+      setTokenPool(pool => pool.map(t => (t === FLIP_STOP ? t : (next ? t + 1 : t - 1))))
+    }
+  }
+
   function startNextTurn(nextTeamIdx) {
     setCurrentTeam(nextTeamIdx)
     if (isCoins) {
@@ -44,7 +54,7 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
       setCoinTokens(buildCoinTokens())
     } else {
       setGridCards(buildFlipGrid(cards))
-      setTokenPool(buildTokenPool())
+      setTokenPool(buildTokenPool(bonusPoints))
     }
     setRevealed(Array(gridSize).fill(null))
     setFlipCount(0)
@@ -102,7 +112,8 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
       } else {
         const newTurnScore = turnScore + token
         setTurnScore(newTurnScore)
-        if (newTurnScore === 15) {
+        const maxScore = bonusPoints ? FLIP_MAX_SCORE_BONUS : FLIP_MAX_SCORE
+        if (newTurnScore === maxScore) {
           spawnConfetti(CONFETTI_COLORS)
           setTurnOver(true)
           bankTurnScore(newTurnScore)
@@ -138,6 +149,16 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
           ))}
         </div>
         <span className="topbar-counter">Team {currentTeam + 1}'s turn</span>
+        {!isCoins && (
+          <button
+            className={`topbar-toggle ${bonusPoints ? 'active' : ''}`}
+            onClick={toggleBonus}
+            aria-label="Toggle bonus points"
+          >
+            <TrendUp size={16} weight="fill" />
+            Bonus
+          </button>
+        )}
         <button className="nav-btn" onClick={toggleFullscreen} aria-label="Toggle fullscreen">
           {isFullscreen ? <ArrowsIn size={18} weight="fill" /> : <ArrowsOut size={18} weight="fill" />}
         </button>
@@ -170,7 +191,9 @@ function Flip({ S, cards, onBackToSettings, onExit }) {
             )}
 
             <div className="flip-scaffold-turn-score">
-              <span className="flip-scaffold-turn-score-label">This Turn</span>
+              <span className="flip-scaffold-turn-score-label">
+                This Turn{!isCoins && bonusPoints ? ' · Bonus' : ''}
+              </span>
               {isCoins ? (
                 <span className="flip-scaffold-turn-score-value flip-scaffold-turn-score-coins">
                   <Coins size={40} weight="fill" />

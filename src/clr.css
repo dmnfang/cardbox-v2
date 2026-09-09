@@ -3018,3 +3018,22 @@ img {
 }
 
 .spell-scope .end-btn-roll { background: var(--spell); }
+
+.topbar-toggle {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--r-md);
+  background: var(--surface-panel);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.topbar-toggle.active {
+  background: var(--flip);
+  color: #fff;
+}
